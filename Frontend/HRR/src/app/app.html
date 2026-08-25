@@ -3,33 +3,33 @@
 </div>
 <!-- structural directives :Ngif, Ng for,Ng switch -->
 <!-- Attribute directives :ng class,ng style -->
-<div *ngFor="let x of stu;index as i">
+<div appRandomColor *ngFor="let x of stu;index as i">
     <span>{{i+1}}.</span>
     <span style="margin-right: 5px;" [ngClass]="{'passed':x.mark>=50,'failed':x.mark<=49}">stdname{{x.name}}</span>
     <span [ngStyle]="{'color':x.mark>=50?'green':'red'}">stdmark{{x.mark}}%</span>
     <span *ngIf="x.mark>=50">passed</span>
     <span *ngIf="x.mark<=49">failed</span>
 </div>
-<!-- <br>
+< <br>
 <br>
 <br>
 <br>
 <div>
     after 17
-</div> -->
-<!-- @for(x of stu; track x ;let i=$index)
+</div> 
+ @for(x of stu; track x ;let i=$index)
 {
 <div>
     <span>{{i+1}}</span>
-    <span style="margin-right: 5px;">stdname{{x.name}}</span>
-    <span>stdmark{{x.mark}}%</span>
+    <span style="margin-right: 5px;"[class]="x.mark>50?'passed':'failed'">stdname{{x.name}}</span>
+    <span [style.color]="x.mark>50?'green':'red'">stdmark{{x.mark}}%</span>
     @if(x.mark>50)
     {
-    <span>passed</span>
+    <span class="passed">passed</span>
     }
     @else {
 
-    <span>failed</span>
+    <span class="failed">failed</span>
     }
 </div>
-} -->
+}

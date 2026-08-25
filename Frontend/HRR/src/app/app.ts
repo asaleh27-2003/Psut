@@ -2,9 +2,10 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgClass, NgIf, NgStyle, } from '@angular/common';
 import { NgFor } from '@angular/common';
+import { RandomColor} from './directives/random-color';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,NgIf,NgFor,NgClass,NgStyle],
+  imports: [RouterOutlet,NgIf,NgFor,NgClass,NgStyle,RandomColor],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
