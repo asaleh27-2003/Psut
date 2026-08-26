@@ -1,10 +1,81 @@
-<div>
-    <form [formGroup]="form">
-        <input type="text" formControlName="name">
-        <input type="text" formControlName="phone">
-        <input type="text" formControlName="email">
-    </form>
-</div>
-<div>
-    {{form.value.name}}
-</div>
+<form [formGroup]="form">
+    <div class="header">
+        <h2>Select And Submit To Join One Of Our Courses</h2>
+        <div class="content">
+            <div class="acc">
+                <span class="mail-name">
+                    Ahmad@gmail.com
+                </span>
+                <span class="sw-acc">
+                    <a href="https://mail.google.com/mail/u/0/" target="_blank">Switch Account
+                    </a>
+                </span>
+
+                <span class="icon">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </span>
+            </div>
+            <p class="description">
+                submit your information to send this inf to team leader
+            </p>
+            <p class="warning">
+                *indicates Required Question
+            </p>
+        </div>
+    </div>
+    <div class="question">
+        <div class="title">
+            <label for="email">
+                <span>Email</span>
+                <span class="required">*</span>
+            </label>
+        </div>
+        <div class="q-input">
+            <input id="email" type="email" placeholder="Enter your email" formControlName="email"[class.required-input-warning]="form.get('email')?.invalid &&form.get('email')?.touched">
+        </div>
+    </div>
+    <div class="question">
+        <div class="title">
+            <div class="name">
+                <label for="name">
+                    Name<span class="required"> *</span>
+                </label>
+            </div>
+            <div class="name-input">
+                <input id="name" type="text" placeholder="Enter your name" formControlName="name">
+            </div>
+        </div>
+    </div>
+    <div class="question">
+        <div class="title">
+            <label for="phone">
+                Phone Number<span class="required"> *</span>
+            </label>
+        </div>
+        <div class="phone-iput">
+            <input id="phone" type="tel" placeholder="Enter your phone number" formControlName="phone">
+        </div>
+    </div>
+    <div class="question">
+        <div class="title">
+            <label for="course">
+                Select Course<span class="formControlName=course">*</span>
+            </label>
+        </div>
+        <div class="course-input">
+            <select id="course" formControlName="course">
+                @for(x of courses;track x)
+                {
+                    <option [ngValue]="x.id">{{x.name}}</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="action">
+        <button type="submit" class="sub btn"[class.disapled]="form.invalid"  [disabled]="!form.valid" >Submit</button>
+        <button type="reset" class="reset btn"(click)="reset()">Clear Form</button>
+    </div>
+    <div class="footer">
+        <p class="copyright">this form was created by PSUT <a href="" target="_blank">For Reports</a></p>
+        <p class="google-form">Google Forms</p>
+    </div>
