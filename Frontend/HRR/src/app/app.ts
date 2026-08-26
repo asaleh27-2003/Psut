@@ -7,6 +7,7 @@ import { RandomColor } from './directives/random-color';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { validate } from '@angular/forms/signals';
 import { ReversePipe } from './pipes/reverse-pipe';
+import { Employees } from './components/employees/employees';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,
@@ -18,46 +19,11 @@ import { ReversePipe } from './pipes/reverse-pipe';
             FormsModule,
             ReactiveFormsModule,
               CommonModule,
-                 ReversePipe],
+                 ReversePipe,
+                Employees],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  stu = [
-    { name: 'stu1', mark: 89 },
-    { name: 'stu2', mark: 57 },
-    { name: 'stu3', mark: 90 },
-    { name: 'stu4', mark: 94 },
-    { name: 'stu5', mark: 49 },
-  ]
-  name: string = "ahmad khara yousef zouft";
-  form = new FormGroup(
-    {
-      name: new FormControl(null, Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      phone: new FormControl(null, [Validators.required, Validators.minLength(9), Validators.maxLength(10),]),
-      course: new FormControl(1, Validators.required),
-    }
-  );
-   submit()
-  {
-    alert(`welcome to the academy, ${this.form.value.name}
-      we will contact you shortely about the  ${this.courses.find(x=>x.id==this.form.value.course)?.name}course`
-    )};
-  courses =
-    [
-      {
-        id: 1, name: "asp"
-      },
-      {
-        id: 2, name: "angular"
-      }
-    ]
-  reset() {
-    this.form.reset({
-      course: 1
-    });
-  }
- price=22222.50;
- creationDate=new Date();
+ 
 }
