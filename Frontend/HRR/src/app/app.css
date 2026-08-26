@@ -6,6 +6,12 @@
     border-top: 7px #734abc solid;
 }
 
+.required-input {
+    color: #d10000;
+    margin-top: 0.4em;
+    font-size: 0.8em;
+}
+
 .mail-name,
 .description,
 .sw-acc,
@@ -66,14 +72,15 @@ select {
     justify-content: space-between;
     margin-top: 1%;
 }
-.disapled
-{
+
+.disapled {
     background-color: #ccc !important;
 }
+
 .btn {
     padding: 1% 2.5%;
     border-radius: 4px;
-    background-color: #673ab5 ;
+    background-color: #673ab5;
     border: none;
     color: white;
     cursor: pointer;
@@ -124,6 +131,3 @@ select {
     cursor: pointer;
     border-color: #ffffff03;
 }
-
-
-

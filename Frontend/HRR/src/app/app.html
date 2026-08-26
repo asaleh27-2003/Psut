@@ -31,7 +31,14 @@
             </label>
         </div>
         <div class="q-input">
-            <input id="email" type="email" placeholder="Enter your email" formControlName="email"[class.required-input-warning]="form.get('email')?.invalid &&form.get('email')?.touched">
+            <input id="email" type="email" placeholder="Enter your email" formControlName="email"
+                [class.required-input-warning]="form.get('email')?.invalid &&form.get('email')?.touched">
+            @if(form.get('email')?.invalid &&form.get('email')?.touched)
+            {
+            <div class="required-input">
+                *Email is required
+            </div>
+            }
         </div>
     </div>
     <div class="question">
@@ -42,7 +49,14 @@
                 </label>
             </div>
             <div class="name-input">
-                <input id="name" type="text" placeholder="Enter your name" formControlName="name">
+                <input id="name" type="text" placeholder="Enter your name" formControlName="name"
+                    [class.required-input-warning]="form.get('name')?.invalid &&form.get('name')?.touched">
+                @if(form.get('name')?.invalid &&form.get('name')?.touched)
+                {
+                <div class="required-input">
+                    *Name is required
+                </div>
+                }
             </div>
         </div>
     </div>
@@ -54,6 +68,25 @@
         </div>
         <div class="phone-iput">
             <input id="phone" type="tel" placeholder="Enter your phone number" formControlName="phone">
+            @if(form.get('phone')?.invalid &&form.get('phone')?.touched)
+            {
+            @if (form.get('phone')?.errors?.['required']) {
+            <div class="required-input">
+                *phone is required
+            </div>
+            }
+            @else if (form.get('phone')?.errors?.['maxlength']) {
+                 <div class="required-input">
+                *phone cannot be more than 10 digits
+            </div>
+            }
+             @else if (form.get('phone')?.errors?.['minlength']) {
+                 <div class="required-input">
+                *phone must be at least 9 digits
+            </div>
+            }
+            }
+
         </div>
     </div>
     <div class="question">
@@ -66,16 +99,26 @@
             <select id="course" formControlName="course">
                 @for(x of courses;track x)
                 {
-                    <option [ngValue]="x.id">{{x.name}}</option>
+                <option [ngValue]="x.id">{{x.name}}</option>
                 }
             </select>
         </div>
     </div>
     <div class="action">
-        <button type="submit" class="sub btn"[class.disapled]="form.invalid"  [disabled]="!form.valid" >Submit</button>
-        <button type="reset" class="reset btn"(click)="reset()">Clear Form</button>
+        <button type="submit" class="sub btn" [class.disapled]="form.invalid" [disabled]="!form.valid"(click)="submit()">Submit</button>
+        <button type="reset" class="reset btn" (click)="reset()">Clear Form</button>
     </div>
     <div class="footer">
         <p class="copyright">this form was created by PSUT <a href="" target="_blank">For Reports</a></p>
         <p class="google-form">Google Forms</p>
     </div>
+    <div>
+        {{price | currency:'EUR'}}
+    </div>
+    <div>
+        {{price }}
+    </div>
+    <div>
+        {{creationDate|date:'dd-MM-yyyy hh:mm'}}
+    </div>
+    </form>
