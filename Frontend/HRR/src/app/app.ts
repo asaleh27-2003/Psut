@@ -6,9 +6,19 @@ import { RandomColor } from './directives/random-color';
 // import{FormsModule,FormGroup}from'@angular/router';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { validate } from '@angular/forms/signals';
+import { ReversePipe } from './pipes/reverse-pipe';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgIf, NgFor, NgClass, NgStyle, RandomColor, FormsModule, ReactiveFormsModule,CommonModule],
+  imports: [RouterOutlet,
+             NgIf,
+             NgFor,
+            NgClass,
+             NgStyle,
+            RandomColor,
+            FormsModule,
+            ReactiveFormsModule,
+              CommonModule,
+                 ReversePipe],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
