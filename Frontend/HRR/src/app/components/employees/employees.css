@@ -7,3 +7,11 @@ align-items: center;
 {
     flex-grow: 1;
 }
+.allign-end
+{
+    display: flex;
+    align-items: flex-end;
+}
+.invalid-input {
+   border-color: red;
+}

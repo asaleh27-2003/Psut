@@ -8,19 +8,20 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } 
 import { validate } from '@angular/forms/signals';
 import { ReversePipe } from './pipes/reverse-pipe';
 import { Employees } from './components/employees/employees';
+import { Departments } from "./components/departments/departments";
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,
-             NgIf,
-             NgFor,
-            NgClass,
-             NgStyle,
-            RandomColor,
-            FormsModule,
-            ReactiveFormsModule,
-              CommonModule,
-                 ReversePipe,
-                Employees],
+    NgIf,
+    NgFor,
+    NgClass,
+    NgStyle,
+    RandomColor,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    ReversePipe,
+    Employees, Departments],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

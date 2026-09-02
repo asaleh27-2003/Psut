@@ -1,7 +1,10 @@
 <div class="container-fluid mt-1">
     <div class="card">
         <div class="card-header">
-            <h5>Fillter</h5>
+            <h5>
+                <i class="bi bi-funnel-fill"></i>
+                Fillter
+            </h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -19,18 +22,28 @@
                 </div>
             </div>
             <div class="text-end mt-2">
-                <button type="button" class="btn btn-secondary">Search</button>
+                <button type="button" class="btn btn-outline-secondary">
+                    <i class="bi bi-search"></i>
+                    <span>
+                        Search
+                    </span>
+                </button>
             </div>
         </div>
     </div>
     <div class="card mt-3">
         <div class="card-header table-header">
             <div class="table-title">
+
                 <h5>Employees</h5>
             </div>
             <div>
                 <div class="text-end mt-1">
-                    <button type="button" class="btn btn-secondary">Add</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" (click)="clearForm()"
+                        data-bs-target="#saveEnployeeModal">
+                        <i class="bi bi-person-fill-add"></i>
+                        Add
+                    </button>
                 </div>
             </div>
         </div>
@@ -38,33 +51,138 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        @for(col of employeesTableColoumns;track col)
+                        {
+                        <th>{{col}}</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                    @for(employee of employees | paginate :paginationConfig ;track employee;let i=$index)
+                    {
+                    <tr class="my-1">
+                        <td>{{i+1}}</td>
+                        <td>{{employee.name}}</td>
+                        <td>{{employee.phone}}</td>
+                        <td>{{employee.birthdate|date:"dd/MM/yy"}}</td>
+                        @if(employee.isActive)
+                        {
+                        <td>
+                            <span class="badge text-bg-success">Active</span>
+
+                        </td>
+                        }
+                        @else {
+                        <td>
+                            <span class="badge text-bg-danger ">Inactive</span>
+                        </td>
+                        }
+                        <td>{{employee.startDate|date:"dd/MM/yy"}}</td>
+                        <td>{{employee.positionname}}</td>
+                        <td>{{employee.departmentName}}</td>
+                        <td>{{employee.managerName}}</td>
+                        <td> <button (click)="editEmployee(employee.id)" type="button" class="btn btn-outline-success"
+                                data-bs-toggle="modal" data-bs-target="#saveEnployeeModal">
+                                <i class="bi bi-pencil-square"></i>
+
+                            </button>
+                        </td>
+                        <td> 
+                            <button (click)="removeEmployee(employee.id)" type="button" class="btn btn-outline-danger">
+                                <i class="bi bi-trash-fill"></i>
+
+                            </button>
+                        </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>@social</td>
-                    </tr>
+                    }
                 </tbody>
             </table>
+            <pagination-controls class="text-end" (pageChange)="changePage($event)"></pagination-controls>
         </div>
-
     </div>
+</div>
+<div class="modal modal-xl fade" id="saveEnployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">SaveEmployee</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="employeeform">
+                    <div class="row allign-end">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="nameControl" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="nameControl" placeholder="Employee Name"
+                                [class.invalid-input]="employeeform.get('Name')?.invalid && employeeform.get('Name')?.touched"
+                                formControlName="Name">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="phoneControl" class="form-label">phone</label>
+                            <input type="text" class="form-control" id="phoneControl" placeholder="Phone Number"
+                                [class.invalid-input]="employeeform.get('Phone')?.invalid && employeeform.get('Phone')?.touched"
+                                ] formControlName="Phone">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="startDateControl" class="form-label">startDate</label>
+                            <input type="date" class="form-control" id="startControl" placeholder="start Date"
+                                [class.invalid-input]="employeeform.get('StartDate')?.invalid && employeeform.get('StartDate')?.touched"
+                                formControlName="StartDate">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="BirthdateControl" class="form-label">Birthdate</label>
+                            <input type="date" class="form-control" id="BirthdateControl" placeholder="Birth date"
+                                [class.invalid-input]="employeeform.get('Birthdate')?.invalid && employeeform.get('Birthdate')?.touched"
+                                formControlName="Birthdate">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="positionControl" class="form-label">position</label>
+                            <select class="form-select" aria-label="Default select example" id="positionsControl"
+                                [class.invalid-input]="employeeform.get('Position')?.invalid && employeeform.get('Position')?.touched"
+                                formControlName="Position">
+                                @for (item of positions;track item)
+                                {
+                                <option [value]="item.id">{{item.name}}</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="positionControl" class="form-label">Deparment</label>
+                            <select class="form-select" aria-label="Default select example" id="DeparmentControl"
+                                [class.invalid-input]="employeeform.get('Department')?.invalid && employeeform.get('Department')?.touched"
+                                formControlName="Department">
+                                @for (item of departments;track item)
+                                {
+                                <option [value]="item.id">{{item.name}}</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <label for="positionControl" class="form-label">Manager</label>
+                            <select class="form-select" aria-label="Default select example" id="ManagerControl"
+                                formControlName="Manager">
+                                @for (item of managers;track item)
+                                {
+                                <option [value]="item.id">{{item.name}}</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="isActiveControl"
+                                    formControlName="IsActive">
+                                <label class="form-check-label" for="isActiveControl">Is Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closebutton>Close</button>
+                <button type="button" class="btn btn-primary" [disabled]="!employeeform.valid"
+                    (click)="saveEmployee()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
