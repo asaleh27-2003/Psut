@@ -3,10 +3,12 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Employee } from '../../Inetrfaces/IEmployee';
+import { ConfirmationDialog } from '../../shared-components/confirmation-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-employees',
-  imports: [CommonModule, ReactiveFormsModule,NgxPaginationModule],
+  imports: [CommonModule, ReactiveFormsModule,NgxPaginationModule,ConfirmationDialog],
   providers: [DatePipe],//Dependency injection for date pipe to be used in the component
   templateUrl: './employees.html',
   styleUrl: './employees.css',
@@ -102,6 +104,14 @@ export class Employees {
     Position: new FormControl(null, [Validators.required]),
     IsActive: new FormControl(true, [Validators.required])
   });
+  paginationConfig = {
+    itemsPerPage:5,
+    currentPage:1,
+  }
+  deleteDialogTitle:string="Delete Confirmation";
+  deleteDialogBody:string="Are you sure you want to delete this employee?"
+  showConfirmationDialog:boolean=false;
+  employeeIdToDelete:number|null=null;
   saveEmployee() {
     if (!this.employeeform.value.Id) {
       let newemp: Employee = {
@@ -148,10 +158,10 @@ export class Employees {
   constructor(private datePipe: DatePipe) {
 
   }
-  removeEmployee(id: number) {
-    // this.employees = this.employees.filter(x => x.id !== id);
-    let index = this.employees.findIndex(e => e.id === id);
-    this.employees.splice(index, 1);
+  removeEmployee() {
+    this.employees = this.employees.filter(x => x.id !== this.employeeIdToDelete);
+    // let index = this.employees.findIndex(e => e.id === id);
+    // this.employees.splice(index, 1);
   }
   editEmployee(id: number) {
     let emp = this.employees.find(e => e.id == id);
@@ -170,30 +180,28 @@ export class Employees {
       this.closebutton?.nativeElement.click();
     }
   }
-  paginationConfig = {
-    itemsPerPage:5,
-    currentPage:1,
-  }
   changePage($event:number)
   {
     this.paginationConfig.currentPage=$event;
   }
+  showConfirmDialog(id:number)
+  {
+    this.employeeIdToDelete=id;
+    this.showConfirmationDialog=true;
+
+  }
+  ConfirmEmpDelete(IsConfirm:boolean)
+  {
+    if(IsConfirm)
+    {
+      this.removeEmployee();
+    }
+    this.showConfirmationDialog=false;
+    this.employeeIdToDelete=null;
+  }
 }
 
 
-export interface Employee {
-  id: number;
-  name: string;
-  positionId?: number | null;
-  positionname?: string | null;
-  birthdate?: Date | null;
-  isActive: boolean | null;
-  startDate: Date;
-  phone?: string | null;
-  managerId?: Number | null;
-  managerName?: string | null;
-  departmentId?: number | null;
-  departmentName?: string | null;
-}
+
 
 
